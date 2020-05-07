@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import os,cv2
-from keras.models import load_model
 from keras.models import Model,load_model
 from keras.applications.mobilenet import preprocess_input
 from keras.layers.normalization import BatchNormalization
@@ -8,7 +7,7 @@ from keras.layers.convolutional import MaxPooling2D,AveragePooling2D,Conv2D
 from keras.layers.core import Activation,Flatten,Dense,Dropout
 from keras.preprocessing.image import img_to_array
 import matplotlib.pyplot as plt
-import numpy as np
+import numpy as nps
 import tensorflow as tf
 from PIL import Image
 
@@ -38,7 +37,6 @@ def upload():
         destination = "/".join([target, filename])
         file.save(destination)
     img = cv2.imread(destination)
-    
     img = img.astype('uint8')
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
@@ -50,11 +48,12 @@ def upload():
     img = img.astype('float32')
     img = img / 255.0
     pred = model.predict_classes(img)
-    # prediction = int(np.argmax(pred, axis=1)[0])
-    if pred:
+    pred1=model.predict(img)
+    print(pred1[0])
+    if pred and pred1:
         plot_dest = "/".join([target, "result.png"])
 
-    return render_template("test.html", pred=pred, filename=filename)
+    return render_template("result.html", pred=pred,pred1=pred1, filename=filename)
 
 
 

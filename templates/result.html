@@ -1,0 +1,37 @@
+{%extends "index.html"%}
+{%block content%}
+{% if pred[0]=='positive' %}
+	<section class="section section-dark">
+		<p><h2>We are sorry to inform you that you have Pneumonia</h2></p>
+		<img src="../static/xray/{{filename}}" style="width: 300px; height: 300px">
+		<img src="../static/xray/result.png" style="width: 300px; height: 300px">
+		<p><h4>1) Image of the X-ray uploaded   2) The heat map generated showing localization of Pneumonia as dark red spot</h4></p>
+		<section>
+			<p><h3>The metrics of the model</h3></p>
+			<img src="../static/img/metrics.png" style="width: 450px; height: 300px;">
+			<br>
+			<img src="../static/img/accuracy.png" style="width: 450px; height: 300px;">
+			{% if pred1[0]>0 and pred1[1]>0 %}
+			<p>The accuracy of Xray being positive is {%pred1[0]%}</p>
+			<p>The accuracy of Xray being negative is {%pred1[1]%}</p>
+			{%endif%}
+		</section>
+	</section>
+	
+{%else%}
+	<section class="section section-dark">
+		<h1>Congratulations</h1>
+		<p><h4>You are free from Pneumonia</h4> </p>
+		<section>
+			<p><h3>The metrics of the model</h3></p>
+			<img src="../static/img/metrics.png" style="width: 450px; height: 300px;">
+			<br>
+			<img src="../static/img/accuracy.png" style="width: 450px; height: 300px;">
+			<p>The accuracy of Xray being positive is {%pred1[0]%}</p>
+			<p>The accuracy of Xray being negative is {%pred1[1]%}</p>
+
+		</section>
+	</section>
+{%endif%}
+
+{%endblock%}
