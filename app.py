@@ -23,7 +23,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 def get_model():
-    model=load_model('C:/Users/anand/Downloads/model360v6.h5')   
+    model=load_model('C:/Users/anand/Downloads/model128v5.h5')   
     print("model_loaded")
     return model
 
@@ -31,20 +31,6 @@ def get_model():
 def index():
     return render_template("index.html")
 
-def remove_border(img, threshold=0):  #Crop image, throwing away the border below the threshold
-    mask = img > threshold
-    return img[np.ix_(mask.any(3), mask.any(0))]
-
-def crop_center(img, size):   #Crop center sizexsize of the image
-  
-    y, x = img.shape #h,w,d
-    startx = (x - size) // 15
-    starty = (y - size) // 15
-    return img[starty+200:starty-400, startx+200:startx+size-300]
-
-def bigger_edge(img):
-    y, x = img.shape
-    return y if y < x else x
 
 @app.route("/upload", methods=['POST'])
 def upload():
@@ -59,16 +45,25 @@ def upload():
         file.save(destination)
     img = cv2.imread(destination)
     cv2.imwrite('static/xray/file.png',img)
-
-    
+    img=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    # equalized_img = clahe.apply(img)
+    # # Save with the same name in another folder.
+    # # plt.imshow(equalized_img)
+   img = img.astype('uint8')
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    equalized_img = clahe.apply(img)
+    img = cv2.cvtColor(equalized_img, cv2.COLOR_GRAY2BGR)
+    img = img_to_array(img)
     img = cv2.resize(img,(360,360))
     img=img.reshape(1,360,360,3)
     img = img.astype('float32')
     img = img / 255.0
-    pred = model.predict_classes(img)
-    pred1=model.predict(img)
-    pos=pred1[0][0]
-    neg=pred1[0][1]
+    result = model.predict_classes(img)
+    pred=model.predict(img)
+    print(result)
+    print(classes[result[0]])
     if pred:
         plot_dest = "/".join([target, "result.png"])
         
