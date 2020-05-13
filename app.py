@@ -7,7 +7,7 @@ from keras.layers.convolutional import MaxPooling2D,AveragePooling2D,Conv2D
 from keras.layers.core import Activation,Flatten,Dense,Dropout
 from keras.preprocessing.image import img_to_array
 import matplotlib.pyplot as plt
-import numpy as nps
+import numpy as np
 import tensorflow as tf
 from PIL import Image
 import numpy as np
@@ -59,17 +59,8 @@ def upload():
         file.save(destination)
     img = cv2.imread(destination)
     cv2.imwrite('static/xray/file.png',img)
-    img_noborder = remove_border(img) #removing the black border 
-    edge = bigger_edge(img_noborder) #find the bigger edge 
-    img_cropped = crop_center(img_noborder, edge) #now crop the image by a center to the edge calculated
-    img = skimage.transform.resize(img_cropped, (size, size), order=3)# Resize to final size
-    img = img.astype('uint8')
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-    equalized_img = clahe.apply(img)
-    cv2.imwrite('static/xray/processed.png',equalized_img)
-    img = cv2.cvtColor(equalized_img, cv2.COLOR_GRAY2BGR)
-    img = img_to_array(img)
+
+    
     img = cv2.resize(img,(360,360))
     img=img.reshape(1,360,360,3)
     img = img.astype('float32')
