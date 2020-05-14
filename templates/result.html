@@ -1,27 +1,17 @@
 {%extends "index.html"%}
 {%block content%}
-{% if pred[0]=='positive' %}
 	<section class="section section-dark">
-		<p><h3>This is a POSITIVE case of Pulmnoary Tuberculosis</h3></p>
-		<img src="../static/xray/{{filename}}" style="width: 300px; height: 300px;">
-		<img src="../static/xray/result.png" style="width: 300px; height: 300px">
-		
-	</section>
-	
-{%else%}
-	<section class="section section-dark">
-		<h3>This is a NEGATIVE case of Pulmnoary Tuberculosis</h3>
+		<h3>This is a {{pred}} case of Pulmonary Tuberculosis</h3>
 		<h4>The accuracy of X-ray being positive is {{pos}}<br>
 		<p>The accuracy of X-ray being negative is {{neg}}</p>
-		<img src="../static/xray/file.png" style="width: 300px; height: 300px">
+		<figure><img src="../static/xray/file.png" style="width: 300px; height: 300px"></figure>
 		<p><h3>The Xray that you uploaded</h3></p>		
 		<p><h3>The Xray passed to model after image processing</h3></p>
-		<img src="../static/xray/processed.png" style="width: 300px; height: 300px">
+		<figure><img src="../static/xray/processedfile.png" style="width: 300px; height: 300px"></figure>
+		<!-- <img src="../static/xray/processedfile.png" style="width: 300px; height: 300px"> -->
 		<p><h3>The metrics of the model</h3></p>
 		<img src="../static/img/metrics.png" style="width: 450px; height: 300px;">
 		<img src="../static/img/accuracy.png" style="width: 450px; height: 300px;">
 		</section>
 	</section>
-{%endif%}
-
 {%endblock%}
