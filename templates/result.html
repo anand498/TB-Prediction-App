@@ -1,16 +1,14 @@
 {%extends "index.html"%}
 {%block content%}
-	<section class="section section-dark">
-		<h3>This is a {{pred}} case of Pulmonary Tuberculosis</h3>
+	<section class="section-dark" style="text-align: center;">
+		<br><br>
+		<h3 >This is a {{pred}} case of Pulmonary Tuberculosis</h3><br>
 		<h4>The accuracy of X-ray being positive is {{pos}}<br>
 		<p>The accuracy of X-ray being negative is {{neg}}</p>
-		<figure><img src="../static/xray/file.png" style="width: 300px; height: 300px"></figure>
 		<p><h3>The Xray that you uploaded</h3></p>		
-		<p><h3>The Xray passed to model after image processing</h3></p>
-		<figure><img src="../static/xray/processedfile.png" style="width: 300px; height: 300px"></figure>
-		<!-- <img src="../static/xray/processedfile.png" style="width: 300px; height: 300px"> -->
+		<figure><img src="../static/xray/file.png" style="width: 360px; height: 360px"></figure><bsr>
 		<p><h3>The metrics of the model</h3></p>
-		<img src="../static/img/metrics.png" style="width: 450px; height: 300px;">
+		<img src="../static/img/metrics.png" style="width: 450px; height: 300px;"> </b>
 		<img src="../static/img/accuracy.png" style="width: 450px; height: 300px;">
 		</section>
 	</section>
