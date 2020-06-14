@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request
 import os,cv2
 from keras.models import Model,load_model
-from keras.applications.mobilenet import preprocess_input
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import MaxPooling2D,AveragePooling2D,Conv2D
-from keras.layers.core import Activation,Flatten,Dense,Dropout
 from keras.preprocessing.image import img_to_array
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,13 +16,6 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 size=224
 
-@app.after_request
-def add_header(response):
-    # response.cache_control.no_store = True
-    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '-1'
-    return response
 def processimg(img):
     img=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     nbTrue=0
