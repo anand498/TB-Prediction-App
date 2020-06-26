@@ -5,11 +5,7 @@ from keras.preprocessing.image import img_to_array
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from PIL import Image
-import sys
-import skimage.transform
-import warnings
-import random
+
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -18,8 +14,6 @@ size=224
 
 def processimg(img):
     img=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    nbTrue=0
-    n=0
     img = cv2.resize(img, (size, size)) 
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
     equalized_img = clahe.apply(img)
@@ -36,7 +30,6 @@ def index():
 def upload():
     model=load_model('modelv7.h5')   
     print("model_loaded")
-    # model=get_model()
     target = os.path.join(APP_ROOT, 'static/xray/')
     if not os.path.isdir(target):
         os.mkdir(target)
